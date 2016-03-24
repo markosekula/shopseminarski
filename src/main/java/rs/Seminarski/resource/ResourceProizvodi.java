@@ -76,22 +76,11 @@ public class ResourceProizvodi {
 		dao.updateItem(pro);
 	} 
 	
-	/*
-	@PUT
-	@Path("/update/item/with/{id}")
-	@Produces (MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public void updateItemWithId (@PathParam("id") int id, Proizvod pro) {
-		dao.updateItem(pro);
-	} */
-	
-	/*
-	
 	@DELETE
 	@Path("/{delete}")
-	public void deleteTastatura (@PathParam ("delete")String sifra) {
-		dao.deleteTastatura(sifra);
+	public void deleteItem (@PathParam ("delete")int id) {
+		dao.deleteItem(id);;
 	}
 	
-	*/
+	
 }

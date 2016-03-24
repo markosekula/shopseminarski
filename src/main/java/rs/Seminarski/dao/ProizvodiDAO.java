@@ -25,13 +25,7 @@ public class ProizvodiDAO {
  private static String INSERTITEM = "INSERT INTO proizvod (vrsta, proizvodjac, model, cena, garancija, slika, akcija, tip, kapacitet, socket, dijagonala, takt) values (?,?,?,?,?,?,?,?,?,?,?,?)";
  private static String UPDATEITEM = "UPDATE proizvod SET vrsta=?, proizvodjac=?, model=?, cena=?, garancija=?, slika=?, akcija=?, tip=?, kapacitet=?, socket=?, dijagonala=?, takt=? WHERE id=? ";
  private static String RETURNTYPE = "SELECT DISTINCT vrsta FROM proizvod";
- 
- 
- 
- private static String DELETE="DELETE FROM tastatura WHERE sifra=?";
- private static String UPDATE= "UPDATE tastatura SET proizvodjac=?, model=?, tip=?, akcija=?, slika=?, cena=?, garancija=? WHERE sifra=?";
-
- 
+ private static String DELETEITEM = "DELETE FROM proizvod WHERE id=?";
  
  
 	// DEFINICIJA KONSTRUKTORA ZA PODESAVNJE KONEKCIJE � UVEK ISTO
@@ -369,19 +363,17 @@ public class ProizvodiDAO {
 		// VRACANJE REZULTATA AKO METODA VRACA REZULTAT
 		return lo; 
 	}
-}
-	 
-	/*
-	public void deleteTastatura(String sifra) {
+	
+	public void deleteItem(int id) {
 		Connection con=null;
 		PreparedStatement pstm=null;
 		
 		try {
-			hop
-			con=ds.getConnection();
-			pstm=con.prepareStatement(DELETE);
 			
-			pstm.setString(1, sifra);
+			con=ds.getConnection();
+			pstm=con.prepareStatement(DELETEITEM);
+			
+			pstm.setInt(1, id);
 			pstm.execute();
 
 			
@@ -396,8 +388,13 @@ public class ProizvodiDAO {
 		}
 			
 	}
+
+}
+	 
 	
-	*/
+	
+	
+	
 
 
 
