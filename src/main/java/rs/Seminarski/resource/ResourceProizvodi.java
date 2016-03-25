@@ -13,6 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import rs.Seminarski.authentication.Secure;
+import rs.Seminarski.authentication.SecureAdmin;
 import rs.Seminarski.dao.ProizvodiDAO;
 import rs.Seminarski.model.Proizvod;
 import rs.Seminarski.service.ServiceProizvodi;
@@ -29,13 +30,13 @@ public class ResourceProizvodi {
 	public ArrayList<Proizvod>  getChooseItem (@PathParam("type") String vrsta) {
 		return  dao.getChooseItem(vrsta);	
 	} 
-
+	
 	@GET
 	//@Secure
 	@Path("/getitem/by/{id}")
 	public Proizvod getById (@PathParam("id") int id) {
 		return  dao.getById(id);
-	} 
+	}
 	
 	@GET
 	////@Secure
@@ -54,6 +55,7 @@ public class ResourceProizvodi {
 	}
 	
 	@POST
+	//@SecureAdmin
 	@Path ("/add")
 	@Produces (MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -62,13 +64,22 @@ public class ResourceProizvodi {
 	}
 	
 	@GET
+	//@SecureAdmin
 	@Path ("/return/distinct")
 	@Produces (MediaType.APPLICATION_JSON)
 	public ArrayList<Proizvod> selectDistinctType () {	
 		return dao.returnDistinctType();
 	}
 	
+	@GET
+	@SecureAdmin
+	@Path("/getitem/byadmin/{id}")
+	public Proizvod getByIdAdmin (@PathParam("id") int id) {
+		return  dao.getById(id);
+	} 
+	
 	@PUT
+	//@SecureAdmin
 	@Path("/update/item/all")
 	@Produces (MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -77,6 +88,7 @@ public class ResourceProizvodi {
 	} 
 	
 	@DELETE
+	//@SecureAdmin
 	@Path("/{delete}")
 	public void deleteItem (@PathParam ("delete")int id) {
 		dao.deleteItem(id);;

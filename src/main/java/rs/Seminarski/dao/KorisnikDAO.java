@@ -146,8 +146,7 @@ public class KorisnikDAO {
 				a = new Korisnik();
 				// SET-OVANJE SVIH ATRIBUTA KLASE SA ODGOVARAJUCIM VREDNOSTIMA IZ RESULTSET-A rs
 				a.setId(rs.getInt("id"));
-				a.setIme(rs.getString("ime"));		a.setIme(rs.getString("ime"));
-				a.setPrezime(rs.getString("prezime"));
+				a.setIme(rs.getString("ime"));		
 				a.setPrezime(rs.getString("prezime"));
 				a.setEmail(rs.getString("email"));
 				a.setPass(rs.getString("pass"));

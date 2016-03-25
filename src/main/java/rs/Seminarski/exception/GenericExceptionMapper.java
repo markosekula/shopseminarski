@@ -15,7 +15,7 @@ import rs.Seminarski.model.ErrorClass;
 		@Override
 		public Response toResponse(Throwable exception) {
 			
-			ErrorClass error = new ErrorClass(exception.getMessage(), 500, "Nothing!");
+			ErrorClass error = new ErrorClass(exception.getMessage(), 401, "Nothing!");
 			
 			return Response.status(Status.INTERNAL_SERVER_ERROR)
 					.entity(error)
