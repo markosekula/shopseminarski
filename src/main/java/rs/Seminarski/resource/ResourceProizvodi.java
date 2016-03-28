@@ -59,7 +59,7 @@ public class ResourceProizvodi {
 	@Path ("/add")
 	@Produces (MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void addTastatura (Proizvod p) {
+	public void addItem (Proizvod p) {
 		dao.insertItem(p);
 	}
 	
