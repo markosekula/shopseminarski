@@ -36,7 +36,7 @@ public class ResourceKorisnik {
 					.claim("admin",String.valueOf(daok.daLiPostojiKorisnik(k.getEmail(), k.getPass()).getAdmin()) )
 					.signWith(SignatureAlgorithm.HS256, "kljuc")
 					.setIssuedAt(new Date())
-					.setExpiration(new Date(new Date().getTime()+60L*1000))
+					.setExpiration(new Date(new Date().getTime()+15*60L*1000))
 					.compact(), daok.daLiPostojiKorisnik(k.getEmail(), k.getPass()).getId(), daok.daLiPostojiKorisnik(k.getEmail(), k.getPass()).getAdmin());
 			
 			return t;

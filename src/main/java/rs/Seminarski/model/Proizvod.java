@@ -14,7 +14,6 @@ public class Proizvod {
 	
 	public Proizvod() {
 		super();
-
 	}
 
 	public Proizvod(String vrsta, String proizvodjac, String model, String garancija, String slika, String tip,
@@ -32,8 +31,8 @@ public class Proizvod {
 		this.cena = cena;
 		this.dijagonala = dijagonala;
 		this.akcija = akcija;
+		
 	}
-
 	public int getId() {
 		return id;
 	}

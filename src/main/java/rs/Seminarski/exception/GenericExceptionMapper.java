@@ -16,7 +16,7 @@ import rs.Seminarski.model.ErrorClass;
 		public Response toResponse(Throwable exception) {
 			
 			ErrorClass error = new ErrorClass(exception.getMessage(), 401, "Nothing!");
-			
+			//System.out.println(exception.getMessage());
 			return Response.status(Status.INTERNAL_SERVER_ERROR)
 					.entity(error)
 					.build();

@@ -16,13 +16,12 @@ import rs.Seminarski.authentication.Secure;
 import rs.Seminarski.authentication.SecureAdmin;
 import rs.Seminarski.dao.ProizvodiDAO;
 import rs.Seminarski.model.Proizvod;
-import rs.Seminarski.service.ServiceProizvodi;
+
 
 @Path ("/items")
 public class ResourceProizvodi {
 	
 	ProizvodiDAO dao = new ProizvodiDAO();
-	ServiceProizvodi spr=new ServiceProizvodi();
 	
 	@GET
 	//@Secure

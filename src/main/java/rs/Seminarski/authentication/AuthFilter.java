@@ -27,7 +27,7 @@ public class AuthFilter implements ContainerRequestFilter {
 			
 		} 
 		
-		 String token = authenticationheader.substring("Bearer".length()).trim();
+		 String token = authenticationheader.substring("Bearer ".length()).trim();
 		
 		try {
 			 // Validate the token

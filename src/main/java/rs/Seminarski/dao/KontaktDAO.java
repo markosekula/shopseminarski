@@ -11,8 +11,6 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import rs.Seminarski.model.Kontakt;
-import rs.Seminarski.model.Proizvod;
-
 
 public class KontaktDAO {
 	private DataSource ds;

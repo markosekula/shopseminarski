@@ -257,8 +257,7 @@ public class ProizvodiDAO {
 	public void insertItem (Proizvod p) {
 			Connection con = null;
 			PreparedStatement pstm = null;
-			
-			
+		
 			try {
 				con=ds.getConnection();
 				pstm=con.prepareStatement(INSERTITEM);

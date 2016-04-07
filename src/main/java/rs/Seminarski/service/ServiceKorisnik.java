@@ -12,7 +12,6 @@ public class ServiceKorisnik {
 		kdao.insertKlient(k);
 	}
 	
-
 	public boolean existEmail(String email) {
 		if (kdao.existUserWithEmail(email) ) {
 			return false;	
