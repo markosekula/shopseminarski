@@ -15,9 +15,7 @@ import rs.Seminarski.model.KupljeniProizvodi;
 public class KupljeniProizvodiDAO {
 	private DataSource ds;
 	
-	private static String INSERTPURCHASEDITEMS = "INSERT INTO kupljeniproizvodi (id_kupovine, id_proizvoda) values (?,?)";
-	
-	private static String GETPURCHASEDITEMS = "SELECT * FROM kupljeniproizvodi WHERE id = ?";
+	private static String INSERTPURCHASEDITEMS = "INSERT INTO kupljeniproizvodi (id_kupovine, id_proizvoda, kolicina) values (?,?,?)";
 
 	public KupljeniProizvodiDAO(){
 		try {
@@ -31,7 +29,7 @@ public class KupljeniProizvodiDAO {
 			}
 		}
 	
-	public void insertPurchasedItems (int idKupovine, int idProizvoda) {
+	public void insertKupljeniProzivodi (int idKupovine, int idProizvoda, int kolicina) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		
@@ -42,6 +40,7 @@ public class KupljeniProizvodiDAO {
 			
 			pstm.setInt(1, idKupovine);
 			pstm.setInt(2, idProizvoda);
+			pstm.setInt(3, kolicina);
 			
 			pstm.execute();
 			
@@ -57,46 +56,5 @@ public class KupljeniProizvodiDAO {
 		
 }
 
-	public ArrayList<KupljeniProizvodi> getPurchasedItems (int id){
-		Connection con = null;
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-		ArrayList<KupljeniProizvodi> lo = new ArrayList<KupljeniProizvodi>();
-		KupljeniProizvodi t=null;
-		// POMOCNE PROMENLJIVE ZA KONKRETNU METODU 
-				
-       try {
-			con = ds.getConnection();
-			pstm = con.prepareStatement(GETPURCHASEDITEMS);
-
-			// DOPUNJAVANJE SQL STRINGA, SVAKI ? SE MORA PODESITI 
-			pstm.setInt(1, id);
-			pstm.execute();
-			
-			rs = pstm.getResultSet();
-
-			while(rs.next()){ 
-				t = new KupljeniProizvodi();
-				// SET-OVANJE SVIH ATRIBUTA KLASE SA ODGOVARAJUCIM VREDNOSTIMA IZ RESULTSET-A rs
-			
-				t.setId(rs.getInt("id"));
-				t.setId_kupovine(rs.getInt("id_kupovine"));
-				t.setId_proizvoda(rs.getInt("id_proizvoda"));
 	
-				lo.add(t);
-			
-			}
-
-		} catch (SQLException e) {	
-			e.printStackTrace();
-		}
-		try {
-			con.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return lo; 
-
-	}
 }

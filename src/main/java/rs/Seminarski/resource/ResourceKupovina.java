@@ -1,8 +1,10 @@
 package rs.Seminarski.resource;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
-
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
@@ -14,6 +16,7 @@ import io.jsonwebtoken.Jwts;
 import rs.Seminarski.authentication.Secure;
 import rs.Seminarski.dao.KupljeniProizvodiDAO;
 import rs.Seminarski.dao.KupovinaDAO;
+import rs.Seminarski.model.KupljeniProizvodi;
 import rs.Seminarski.model.Kupovina;
 import rs.Seminarski.model.Proizvod;
 
@@ -43,13 +46,23 @@ public class ResourceKupovina {
 		if(idKupovine != -1){
 		for(Proizvod proizvod : k.getCart()){
 			
-			System.out.println(k.getCart());
+			System.out.println("kolicina:" +proizvod.getQuantity());
+			
 			System.out.println(proizvod.getId());
-			kdao.insertPurchasedItems(idKupovine, proizvod.getId());
+			
+			kdao.insertKupljeniProzivodi(idKupovine, proizvod.getId(), proizvod.getQuantity());
 		}
 		}
 		
 	} 
+	
+
+	@GET
+	@Path ("/gettime")
+	@Produces (MediaType.APPLICATION_JSON)
+	public ArrayList<Kupovina> getDateAndTime() {
+		return daok.getTime();
+	}
 	
 }
 

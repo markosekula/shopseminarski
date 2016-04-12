@@ -22,6 +22,8 @@ public class KorisnikDAO {
 	private static String EXISTKLIENT = "SELECT * FROM korisnik where email = ? ";
 	
 	private static String EXISTUSER = "SELECT * FROM korisnik where email=? and pass=?";
+	private static String GETALLUSERS =  "SELECT * FROM korisnik WHERE admin=0 ";
+	private static String DELETEUSER = "DELETE FROM korisnik WHERE id=?";
 	
 	public KorisnikDAO(){
 		try {
@@ -120,7 +122,6 @@ public class KorisnikDAO {
 		}
 		return k;
 	}
-	
 	
 	public ArrayList<Korisnik> selectLogin(){
 		Connection con = null;
@@ -244,7 +245,77 @@ public class KorisnikDAO {
 		return false; 
 	}
 
-	
+	public ArrayList<Korisnik> getAllUsers(){
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		// POMOCNE PROMENLJIVE ZA KONKRETNU METODU 
+		ArrayList<Korisnik> lo = new ArrayList<Korisnik>();
+		Korisnik a = null;
+				
+          try {
+			con = ds.getConnection();
+			pstm = con.prepareStatement(GETALLUSERS);
+
+			// DOPUNJAVANJE SQL STRINGA, SVAKI ? SE MORA PODESITI 
+			
+			pstm.execute();
+
+//****POCETAK AKO UPIT VRACA REZULTAT TREBA SLEDECI DEO 
+			rs = pstm.getResultSet();
+
+			while(rs.next()){ // if UMESTO while AKO UPIT VRACA JEDAN REZULTAT
+				// KREIRANJE INSTANCE KLASE PREKO PODRAZUMEVANOG KONSTRUKTORA
+				a = new Korisnik();
+				// SET-OVANJE SVIH ATRIBUTA KLASE SA ODGOVARAJUCIM VREDNOSTIMA IZ RESULTSET-A rs
+				a.setId(rs.getInt("id"));
+				a.setIme(rs.getString("ime"));		
+				a.setPrezime(rs.getString("prezime"));
+				a.setEmail(rs.getString("email"));
+				a.setPass(rs.getString("pass"));
+				
+				a.setAdmin(rs.getByte("admin"));
+				// DODAVANJE INSTANCE U LISTU AKO METODA VRACA LISTU, AKO NE VRACA ONDA NE TREBA 
+				lo.add(a);
+			
+			}
+//****KRAJ OBRADE ResultSet-a	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		// VRACANJE REZULTATA AKO METODA VRACA REZULTAT
+		return lo; 
+	}
+
+	public void deleteUser(int id) {
+		Connection con=null;
+		PreparedStatement pstm=null;
+		
+		try {
+			
+			con=ds.getConnection();
+			pstm=con.prepareStatement(DELETEUSER);
+			
+			pstm.setInt(1, id);
+			pstm.execute();
+			
+		} catch (Exception e) {
+			
+		}
+		
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+			
+	}
+
 }
 
 

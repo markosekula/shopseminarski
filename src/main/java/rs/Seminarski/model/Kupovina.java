@@ -1,6 +1,7 @@
 package rs.Seminarski.model;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class Kupovina {
@@ -8,15 +9,17 @@ public class Kupovina {
 	private int id;
 	private ArrayList<Proizvod> cart;
 	private BigDecimal ukupna_cena;
+	private Timestamp vreme;
 	
 	public Kupovina() {
 		super();
 	}
 
-	public Kupovina(ArrayList<Proizvod> cart, BigDecimal ukupna_cena ) {
+	public Kupovina(ArrayList<Proizvod> cart, BigDecimal ukupna_cena, Timestamp vreme ) {
 		super();
 		this.cart = cart;
 		this.ukupna_cena = ukupna_cena;
+		this.vreme = vreme;
 	}
 
 	public ArrayList<Proizvod> getCart() {
@@ -42,5 +45,15 @@ public class Kupovina {
 	public void setId(int id) {
 		this.id = id;
 	}
+
+	public Timestamp getVreme() {
+		return vreme;
+	}
+
+	public void setVreme(Timestamp vreme) {
+		this.vreme = vreme;
+	}
+	
+	
 	
 }

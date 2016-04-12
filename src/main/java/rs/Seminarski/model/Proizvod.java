@@ -12,12 +12,14 @@ public class Proizvod {
 	private BigDecimal cena,dijagonala;
 	private byte akcija;
 	
+	private int quantity=1;
+	
 	public Proizvod() {
 		super();
 	}
 
 	public Proizvod(String vrsta, String proizvodjac, String model, String garancija, String slika, String tip,
-			String kapacitet, String socket, String takt, BigDecimal cena, BigDecimal dijagonala, byte akcija) {
+			String kapacitet, String socket, String takt, BigDecimal cena, BigDecimal dijagonala, byte akcija, int quantity) {
 		super();
 		this.vrsta = vrsta;
 		this.proizvodjac = proizvodjac;
@@ -31,8 +33,17 @@ public class Proizvod {
 		this.cena = cena;
 		this.dijagonala = dijagonala;
 		this.akcija = akcija;
+		this.quantity = quantity;
 		
 	}
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
 	public int getId() {
 		return id;
 	}

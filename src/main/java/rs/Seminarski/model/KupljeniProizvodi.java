@@ -40,6 +40,5 @@ public class KupljeniProizvodi {
 	public void setId_proizvoda(int id_proizvoda) {
 		this.id_proizvoda = id_proizvoda;
 	}
-	
-	
+
 }
