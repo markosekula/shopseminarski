@@ -18,13 +18,15 @@ import rs.Seminarski.dao.KomentariDAO;
 import rs.Seminarski.dao.KorisnikKomentariDAO;
 import rs.Seminarski.model.Komentari;
 import rs.Seminarski.model.KorisnikKomentari;
-import rs.Seminarski.model.Kupovina;
+import rs.Seminarski.service.ServicePagination;
 
 @Path("/comments")
 public class ResourceKomentari {
 	
 	KomentariDAO kodao = new KomentariDAO ();
 	KorisnikKomentariDAO kkdao = new KorisnikKomentariDAO();
+	
+	ServicePagination pagination = new ServicePagination ();
 	
 	@POST
 	@Path ("/add")
@@ -53,7 +55,7 @@ public class ResourceKomentari {
 	// admin resource comments
 	
 	@GET
-	@Path ("/admindistinct/")
+	@Path ("/admindistinct")
 	@Produces (MediaType.APPLICATION_JSON)
 	public ArrayList<KorisnikKomentari> getAdminDistinctComments() {
 		return kkdao.getAdminDistinctComments();
@@ -64,18 +66,29 @@ public class ResourceKomentari {
 	public void deleteComments (@PathParam("delete") int id) {
 		kkdao.deleteComments(id);
 	}
-		
-	@GET
-	@Path ("/get/all/{id}")
-	@Produces (MediaType.APPLICATION_JSON)
-	public ArrayList<KorisnikKomentari> getAllComments(@PathParam("id") int id_proizvoda) {
-		return kkdao.getAllComments(id_proizvoda);
-	}
 	
 	@DELETE
 	@Path ("/delete/one/{Idcomment}")
 	public void deleteOneComment (@PathParam("Idcomment") int id) {
 		kkdao.deleteOneComment(id);
 	}
+	
+	//admin get 10 comments
+	
+	@GET
+	@Path ("/get/only/ten/for/product/{id}/{page_no}")
+	@Produces (MediaType.APPLICATION_JSON)
+	public ArrayList<KorisnikKomentari> getOnlyTenComments(@PathParam("id") int id_proizvoda, @PathParam("page_no") int page_no) {
+		return pagination.getServiceTenComments(id_proizvoda, page_no);
+	} 
+	
+	@GET
+	@Path ("/get/count/{id}")
+	//@Produces (MediaType.APPLICATION_JSON)
+	public int getCountComments(@PathParam("id") int id) {
+		return kkdao.getCountComments(id);
+		
+	}
+	
 
 }

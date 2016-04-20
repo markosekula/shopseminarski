@@ -27,20 +27,21 @@ public class KorisnikKomentariDAO {
 			+ "JOIN proizvod ON proizvod.id=komentari.id_proizvoda  "
 			+ "ORDER BY komentari.vreme DESC";
 	
-	private static String ADMINGETALLCOMMENTS = "SELECT komentari.id AS id_komentara, korisnik.ime, korisnik.prezime, komentari.komentar, komentari.id_proizvoda, proizvod.vrsta, proizvod.proizvodjac, proizvod.model, komentari.vreme "
+	private static String ADMINGET10COMMENTS = "SELECT komentari.id AS id_komentara, korisnik.ime, korisnik.prezime, komentari.komentar, komentari.id_proizvoda, proizvod.vrsta, proizvod.proizvodjac, proizvod.model,komentari.vreme "
 			+ "FROM komentari "
 			+ "JOIN proizvod ON proizvod.id=komentari.id_proizvoda "
 			+ "JOIN korisnik ON korisnik.id=komentari.id_korisnika "
-			+ "WHERE komentari.id_proizvoda=? "
-			+ "ORDER BY komentari.vreme ASC";
+			+ "WHERE komentari.id_proizvoda =? "
+			+ "ORDER BY komentari.vreme ASC "
+			+ "LIMIT 10 OFFSET ?";
+			
 
 	private static String DELETEALLCOMMENTS = "DELETE FROM komentari WHERE id_proizvoda=?";
 	
 	private static String COUNTCOMMENTS = "SELECT COUNT(id) AS id_komentara FROM komentari WHERE id_proizvoda=?";
 	
 	private static String DELETEONECOMMENT = "DELETE FROM komentari WHERE id=?";
-	
-	
+
 	public KorisnikKomentariDAO(){
 		try {
 			InitialContext cxt = new InitialContext();
@@ -205,7 +206,32 @@ public class KorisnikKomentariDAO {
 		
 }
 
-	public ArrayList<KorisnikKomentari> getAllComments(int id_proizvoda) {
+	public void deleteOneComment(int id) {
+		Connection con=null;
+		PreparedStatement pstm=null;
+		
+		try {
+			
+			con=ds.getConnection();
+			pstm=con.prepareStatement(DELETEONECOMMENT);
+			
+			pstm.setInt(1, id);
+			pstm.execute();
+
+			
+		} catch (Exception e) {
+			
+		}
+		
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+			
+	}
+
+	public ArrayList<KorisnikKomentari> getTenComments(int id_proizvoda, int offset) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -216,9 +242,10 @@ public class KorisnikKomentariDAO {
 		try {
 			con = ds.getConnection();
 		
-			pstm = con.prepareStatement(ADMINGETALLCOMMENTS);
+			pstm = con.prepareStatement(ADMINGET10COMMENTS);
 			
 			pstm.setInt(1, id_proizvoda);
+			pstm.setInt(2, offset);
 			pstm.execute();
 			
 			rs = pstm.getResultSet();
@@ -253,28 +280,39 @@ public class KorisnikKomentariDAO {
 		return lak;
 	}
 
-	public void deleteOneComment(int id) {
-		Connection con=null;
-		PreparedStatement pstm=null;
+	public int getCountComments (int id) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		
+		//KorisnikKomentari ak =  new KorisnikKomentari();
+		
+		double count= 0;
 		
 		try {
-			
 			con=ds.getConnection();
-			pstm=con.prepareStatement(DELETEONECOMMENT);
-			
+			pstm=con.prepareStatement(COUNTCOMMENTS);
+		
 			pstm.setInt(1, id);
 			pstm.execute();
-
+			
+			rs = pstm.getResultSet();
+			
+			if(rs.next()){ 	
+				count=rs.getInt("id_komentara");
+				//ak.setCount(count); 
+			}
 			
 		} catch (Exception e) {
-			
+				
 		}
-		
 		try {
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-			
-	}
+		
+		//return ak;
+		return (int) Math.ceil(count/10); 	
 }
+	}

@@ -85,7 +85,6 @@ public class KorisnikKomentari {
 		this.vreme = vreme;
 	}
 
-
 	public int getId_proizvoda() {
 		return id_proizvoda;
 	}
