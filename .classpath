@@ -33,5 +33,9 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/home/dev5/Downloads/jaxrs-ri/lib/javax.ejb.jar"/>
+	<classpathentry kind="lib" path="/home/dev5/Downloads/jaxrs-ri/lib/activation.jar"/>
+	<classpathentry kind="lib" path="/home/dev5/Downloads/jaxrs-ri/lib/javaee.jar"/>
+	<classpathentry kind="lib" path="/home/dev5/Downloads/jaxrs-ri/lib/java-mail-1.4.4.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

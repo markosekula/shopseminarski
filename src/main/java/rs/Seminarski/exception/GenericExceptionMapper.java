@@ -7,15 +7,13 @@ import javax.ws.rs.ext.Provider;
 
 import rs.Seminarski.model.ErrorClass;
 
-
-	
-	@Provider
+	//@Provider
 	public class GenericExceptionMapper implements ExceptionMapper<Throwable>{
 
 		@Override
 		public Response toResponse(Throwable exception) {
 			
-			ErrorClass error = new ErrorClass(exception.getMessage(), 401, "Nothing!");
+			ErrorClass error = new ErrorClass(exception.getMessage(), 405, "Notgttthing!");
 			//System.out.println(exception.getMessage());
 			return Response.status(Status.INTERNAL_SERVER_ERROR)
 					.entity(error)
