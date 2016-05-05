@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import rs.Seminarski.model.Credentials;
 import rs.Seminarski.model.Korisnik;
 
 
@@ -20,6 +22,9 @@ public class KorisnikDAO {
 	private static String SELECTLOGIN = "SELECT * FROM korisnik";
 	private static String INSERTKLIENT = "INSERT INTO korisnik (ime, prezime, email, pass) VALUES(?,?,?,?)";
 	private static String EXISTKLIENT = "SELECT * FROM korisnik where email = ? ";
+	
+	private static String EXISTUSERFORCHANGEPASSWORD = "SELECT * FROM korisnik where email = ? ";
+	private static String CHANGEPASSWORD = "UPDATE korisnik SET pass=? WHERE email=?";
 	
 	private static String EXISTUSER = "SELECT * FROM korisnik where email=? and pass=?";
 	private static String GETALLUSERS =  "SELECT * FROM korisnik WHERE admin=0 ";
@@ -314,6 +319,70 @@ public class KorisnikDAO {
 			e.printStackTrace();
 		}
 			
+	}
+
+	public String existUserWithEmailForChangePassword(String email){
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+	
+		Korisnik a = null;
+				
+            try {
+			con = ds.getConnection();
+			pstm = con.prepareStatement(EXISTUSERFORCHANGEPASSWORD);
+ 
+			pstm.setString(1, email);
+			
+			pstm.execute();
+
+			rs = pstm.getResultSet();
+
+			if(rs.next()){
+				a = new Korisnik();
+				a.setId(rs.getInt("id"));
+				a.setIme(rs.getString("ime"));
+				a.setPrezime(rs.getString("prezime"));
+				a.setEmail(rs.getString("email"));
+				a.setPass(rs.getString("pass"));
+				a.setAdmin(rs.getByte("admin"));
+				
+				return "";
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null; 
+	}
+
+	public void changePassword(Korisnik k){
+		Connection con = null;
+		PreparedStatement pstm = null;
+		
+       try {
+			con = ds.getConnection();
+			pstm = con.prepareStatement(CHANGEPASSWORD);
+			
+			pstm.setString(1, k.getPass());
+			pstm.setString(2, k.getEmail());
+		
+			
+			pstm.execute();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
 	}
 
 }

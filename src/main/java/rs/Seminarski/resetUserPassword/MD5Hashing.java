@@ -27,10 +27,7 @@ public class  MD5Hashing {
 		
 			e.printStackTrace();
 		}
-		return null; 
-		
-		
-		
+		return null; 	
 		
 	}
 		
